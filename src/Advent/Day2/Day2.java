@@ -11,11 +11,11 @@ public class Day2 {
 
     static List<String> read() throws FileNotFoundException {
         Scanner sc = new Scanner(new File("src/Advent/Day2/day2.txt"));
-        List<String> idList = new ArrayList<>();
+        List<String> ids = new ArrayList<>();
         while (sc.hasNext()) {
-            idList.add(sc.next());
+            ids.add(sc.next());
         }
-        return idList;
+        return ids;
     }
 
     static int question1(List<String> ids) {
@@ -34,7 +34,6 @@ public class Day2 {
                     three = true;
                 }
             }
-
             if (two) {
                 twos++;
             }
@@ -43,7 +42,6 @@ public class Day2 {
             }
         }
         return twos * threes;
-
     }
 
     static String question2(List<String> ids) {
