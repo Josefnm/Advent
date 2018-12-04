@@ -34,22 +34,14 @@ public class Day4 {
             switch (entry.getValue().charAt(0)) {
                 case '#':
                     Integer s = Integer.parseInt(entry.getValue().replaceAll("[^0-9]", ""));
-                    if (guards.containsKey(s)) {
-
-                        currentGuard = guards.get(s);
-                    } else {
-                        currentGuard = new Guard(s);
-                        guards.put(s, currentGuard);
-                    }
+                    guards.computeIfAbsent(s, t -> new Guard(t));
+                    currentGuard = guards.get(s);
                     break;
                 case 'a':
                     currentGuard.sleep(Integer.parseInt(entry.getKey().substring(6, 8)));
                     break;
                 case 'u':
                     currentGuard.woke(Integer.parseInt(entry.getKey().substring(6, 8)));
-                    break;
-                default:
-                    System.out.println("error");
                     break;
             }
         }

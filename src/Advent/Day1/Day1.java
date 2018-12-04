@@ -11,30 +11,31 @@ public class Day1 {
 
     static ArrayList<Integer> read() throws FileNotFoundException {
         Scanner sc = new Scanner(new File("src/Advent/Day1/day1.txt"));
-        ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<Integer> freqList = new ArrayList<>();
         while (sc.hasNext()) {
-            list.add(sc.nextInt());
+            freqList.add(sc.nextInt());
         }
-        return list;
+        return freqList;
     }
 
-    static void question1(ArrayList<Integer> list) {
-        System.out.println(list.stream().mapToInt(Integer::intValue).sum());
+    static void question1(ArrayList<Integer> freqList) {
+        System.out.println(freqList.stream().mapToInt(Integer::intValue).sum());
     }
 
-    static void question2(ArrayList<Integer> list) {
+    static void question2(ArrayList<Integer> freqList) {
         HashSet<Integer> set = new HashSet<>();
         int sum = 0, count = -1;
         while(set.size()==++count) {
-            set.add(sum+=list.get(count%list.size()));
+            set.add(sum+=freqList.get(count%freqList.size()));
         }
+        System.out.println(count/freqList.size());
         System.out.println(sum);
     }
 
     public static void main(String[] args) throws IOException {
-        ArrayList<Integer> list = read();
-        question1(list);
-        question2(list);
+        ArrayList<Integer> freqList = read();
+        question1(freqList);
+        question2(freqList);
 
     }
 

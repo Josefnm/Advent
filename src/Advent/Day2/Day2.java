@@ -39,12 +39,16 @@ public class Day2 {
 
     static String question2(Map<Integer, String> ids) {
         for (int i = 0; i < ids.size() - 1; i++) {
+            a:
             for (int j = i + 1; j < ids.size(); j++) {
                 for (int k = 0; k < ids.get(i).length(); k++) {
-                    if (ids.get(i).charAt(k) != ids.get(j).charAt(k)
-                            && ids.get(i).substring(k + 1)
-                                    .equals(ids.get(i).substring(k + 1))) {
-                        return ids.get(i).substring(0, k) + ids.get(i).substring(k + 1);
+                    if (ids.get(i).charAt(k) != ids.get(j).charAt(k)) {
+                        if (ids.get(i).substring(k + 1)
+                                .equals(ids.get(j).substring(k + 1))) {
+                            return ids.get(i).substring(0, k) + ids.get(i).substring(k + 1);
+                        } else {
+                            continue a;
+                        }
                     }
                 }
             }
