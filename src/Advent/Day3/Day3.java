@@ -46,6 +46,7 @@ public class Day3 extends Day {
                 .filter(i -> i.getValue())
                 .count();
     }
+    
 
     public int question2() {
         a:

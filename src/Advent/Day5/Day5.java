@@ -1,47 +1,36 @@
 package Advent.Day5;
 
 import Advent.Day;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public class Day5 extends Day {
 
-    public List<Character> chars;
-
+    public char[] chars;
     TreeSet<Integer> counts;
 
     public Day5() {
         this.counts = new TreeSet<>();
-        chars = sc.nextLine().chars().mapToObj(i -> (char) i).collect(Collectors.toList());
+        chars = sc.nextLine().toCharArray();
         countAll();
-        
     }
 
     public void countAll() {
-        for (int i = 'A'-1; i < 'Z'; i++) {
-            List<Character> tempChars = new ArrayList<>(chars);
-            int j = 0;
-            while (j < tempChars.size() - 1) {
-                if (32 == Math.abs(tempChars.get(j) - tempChars.get(j + 1))) {
-                    tempChars.remove(j);
-                    tempChars.remove(j);
-                    j = j - 1 > 0 ? j - 1 : 0;
-                } else if (tempChars.get(j) == i || tempChars.get(j) == i + 32) {
-                    tempChars.remove(j);
-                    j = j - 1 > 0 ? j - 1 : 0;
-                } else {
-                    j++;
+        for (int i = 'A' - 1; i < 'Z'; i++) {
+            LinkedList<Character> result = new LinkedList<>();
+            for (int j = 1; j < chars.length; j++) {
+                if (result.size() > 0 && Math.abs(chars[j] - result.getLast()) == 32) {
+                    result.removeLast();
+                } else if (chars[j] != i && chars[j] != i + 32) {
+                    result.add(chars[j]);
                 }
             }
-            counts.add(tempChars.size());
+            counts.add(result.size());
         }
     }
 
     public static void main(String[] args) {
         Day5 d = new Day5();
-        
         System.out.println(d.counts.last());
         System.out.println(d.counts.first());
     }

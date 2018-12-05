@@ -36,7 +36,6 @@ public class Guard {
         for (int i = 0; i < 60; i++) {
             if (sleepCount[i] > max) {
                 max = sleepCount[i];
-
             }
         }
         return max;
