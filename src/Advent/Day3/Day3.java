@@ -1,27 +1,23 @@
 package Advent.Day3;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import Advent.Day;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 
-public class Day3 {
+public class Day3 extends Day {
 
-    private final List<int[]> cuts;
+    private final List<int[]> claims;
     private final HashMap<Integer, Boolean> cloth;
 
-    public Day3() throws FileNotFoundException {
-        this.cuts = new ArrayList<>();
+    public Day3() {
+        this.claims = new ArrayList<>();
         this.cloth = new HashMap<>();
-        read();
+        readClaims();
         findOverlap();
     }
 
-    private void read() throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("src/Advent/Day3/day3.txt"));
+    private void readClaims() {
         sc.useDelimiter("\\D+");
         int[] cut;
         while (sc.hasNext()) {
@@ -29,14 +25,15 @@ public class Day3 {
             for (int i = 0; i < 5; i++) {
                 cut[i] = sc.nextInt();
             }
-            cuts.add(cut);
+            claims.add(cut);
+            
         }
     }
 
     private void findOverlap() {
-        cuts.forEach((cut) -> {
-            for (int i = cut[1]; i < cut[1] + cut[3]; i++) {
-                for (int j = i * 1000 + cut[2]; j < i * 1000 + cut[2] + cut[4]; j++) {
+        claims.forEach((claim) -> {
+            for (int i = claim[1]; i < claim[1] + claim[3]; i++) {
+                for (int j = i * 1000 + claim[2]; j < i * 1000 + claim[2] + claim[4]; j++) {
                     cloth.put(j, (cloth.get(j) != null));
                 }
             }
@@ -52,22 +49,23 @@ public class Day3 {
 
     public int question2() {
         a:
-        for (int[] cut : cuts) {
-            for (int i = cut[1]; i < cut[1] + cut[3]; i++) {
-                for (int j = i * 1000 + cut[2]; j < i * 1000 + cut[2] + cut[4]; j++) {
+        for (int[] claim : claims) {
+            for (int i = claim[1]; i < claim[1] + claim[3]; i++) {
+                for (int j = i * 1000 + claim[2]; j < i * 1000 + claim[2] + claim[4]; j++) {
                     if (cloth.get(j)) {
                         continue a;
                     }
                 }
             }
-            return cut[0];
+            return claim[0];
         }
         return 0;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Day3 d = new Day3();
         System.out.println(d.question1());
         System.out.println(d.question2());
+        System.out.println(234%10);   
     }
 }

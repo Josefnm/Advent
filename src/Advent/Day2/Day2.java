@@ -1,16 +1,12 @@
 package Advent.Day2;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import Advent.Day;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
-public class Day2 {
+public class Day2 extends Day {
 
-    static Map<Integer, String> read() throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("src/Advent/Day2/day2.txt"));
+    public Map<Integer, String> read() {
         Map<Integer, String> ids = new HashMap<>();
         int count = 0;
         while (sc.hasNext()) {
@@ -19,7 +15,7 @@ public class Day2 {
         return ids;
     }
 
-    static int question1(Map<Integer, String> ids) {
+    public int question1(Map<Integer, String> ids) {
         int twos = 0, threes = 0;
         Map<Character, Integer> occur;
         for (String id : ids.values()) {
@@ -37,7 +33,7 @@ public class Day2 {
         return twos * threes;
     }
 
-    static String question2(Map<Integer, String> ids) {
+    public String question2(Map<Integer, String> ids) {
         for (int i = 0; i < ids.size() - 1; i++) {
             a:
             for (int j = i + 1; j < ids.size(); j++) {
@@ -56,11 +52,11 @@ public class Day2 {
         return null;
     }
 
-    public static void main(String[] args) throws IOException {
-        //long startTime = System.currentTimeMillis();    //Store starting time
-        Map<Integer, String> ids = read();
-        System.out.println(question1(ids));
-        System.out.println(question2(ids));
-        //System.out.println(( System.currentTimeMillis() - startTime ));
+    public static void main(String[] args) {
+        Day2 d = new Day2();
+        Map<Integer, String> ids = d.read();
+        System.out.println(d.question1(ids));
+        System.out.println(d.question2(ids));
+
     }
 }

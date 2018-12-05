@@ -7,7 +7,7 @@ package Advent.Day4;
 public class Guard {
 
     private final Integer id;
-    private int timeSlept;
+    private int totalTimeSlept;
     private int tempSlept;
     private int[] sleepCount;
 
@@ -15,7 +15,7 @@ public class Guard {
         this.sleepCount = new int[60];
         this.tempSlept = 0;
         this.id = id;
-        this.timeSlept = 0;
+        this.totalTimeSlept = 0;
     }
 
     public int getMaxMinute() {
@@ -29,13 +29,14 @@ public class Guard {
         }
         return iMax;
     }
+
     public int getMaxCount() {
-        
+
         int max = 0;
         for (int i = 0; i < 60; i++) {
             if (sleepCount[i] > max) {
                 max = sleepCount[i];
-               
+
             }
         }
         return max;
@@ -45,24 +46,14 @@ public class Guard {
         return id;
     }
 
-    public int getTimeSlept() {
-        return timeSlept;
+    public int getTotalTimeSlept() {
+        return totalTimeSlept;
     }
 
-    private void addTimeSlept(int timeSlept) {
-        this.timeSlept += timeSlept - tempSlept;
-    }
-
-    public void sleep(int slept) {
-        tempSlept = slept;
-    }
-
-    public void woke(int woke) {
-        addTimeSlept(woke);
-        for (int i = tempSlept; i < woke; i++) {
+    public void brokeWoke(int broke, int woke) {
+        this.totalTimeSlept += woke - broke;
+        for (int i = broke; i < woke; i++) {
             sleepCount[i]++;
         }
-
     }
-
 }

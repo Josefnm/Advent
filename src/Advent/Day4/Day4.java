@@ -1,56 +1,54 @@
 package Advent.Day4;
 
-import java.io.File;
+import Advent.Day;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.TreeMap;
 
-public class Day4 {
+public class Day4 extends Day {
 
-    private final TreeMap<String, String> list;
+    private final TreeMap<String, Integer> times;
     private final HashMap<Integer, Guard> guards;
 
     public Day4() throws FileNotFoundException {
         this.guards = new HashMap<>();
-        this.list = new TreeMap();
+        this.times = new TreeMap();
         read();
         guardStats();
+
     }
 
     private void read() throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("src/Advent/Day4/day4.txt"));
         String s;
         while (sc.hasNextLine()) {
-            s = sc.nextLine();
-            list.put(s.substring(5, 17).replaceAll("[^0-9]", ""), s.substring(25));
+            s = sc.nextLine().replaceAll("[^0-9]", "");
+//            System.out.println(s.substring(0, 12));
+//            System.out.println(Integer.parseInt(s.substring(12)+0)/10);
+            times.put(s.substring(0, 12), Integer.parseInt(s.substring(12)+0)/10);
+            //LocalDateTime dt=LocalDateTime.parse(s.substring(0, 12),DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
         }
     }
 
     private void guardStats() {
         Guard currentGuard = null;
-        for (Map.Entry<String, String> entry : list.entrySet()) {
-            switch (entry.getValue().charAt(0)) {
-                case '#':
-                    Integer s = Integer.parseInt(entry.getValue().replaceAll("[^0-9]", ""));
-                    guards.computeIfAbsent(s, t -> new Guard(t));
-                    currentGuard = guards.get(s);
-                    break;
-                case 'a':
-                    currentGuard.sleep(Integer.parseInt(entry.getKey().substring(6, 8)));
-                    break;
-                case 'u':
-                    currentGuard.woke(Integer.parseInt(entry.getKey().substring(6, 8)));
-                    break;
+        for (Iterator<Map.Entry<String, Integer>> it = times.entrySet().iterator(); it.hasNext();) {
+            Map.Entry<String, Integer> entry = it.next();
+            if (entry.getValue()>0) {
+                guards.computeIfAbsent(entry.getValue(), t -> new Guard(t));
+                currentGuard = guards.get(entry.getValue());
+            } else {
+                currentGuard.brokeWoke(Integer.parseInt(entry.getKey().substring(10, 12)), Integer.parseInt(it.next().getKey().substring(10, 12)));
             }
+
         }
     }
 
     public int question1() {
         Guard maxGuard = null;
         for (Guard guard : guards.values()) {
-            if (maxGuard == null || guard.getTimeSlept() > maxGuard.getTimeSlept()) {
+            if (maxGuard == null || guard.getTotalTimeSlept() > maxGuard.getTotalTimeSlept()) {
                 maxGuard = guard;
             }
         }
