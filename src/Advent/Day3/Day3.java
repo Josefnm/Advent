@@ -18,12 +18,12 @@ public class Day3 extends Day {
     }
 
     private void readClaims() {
-        sc.useDelimiter("\\D+");
+        scanner.useDelimiter("\\D+");
         int[] cut;
-        while (sc.hasNext()) {
+        while (scanner.hasNext()) {
             cut = new int[5];
             for (int i = 0; i < 5; i++) {
-                cut[i] = sc.nextInt();
+                cut[i] = scanner.nextInt();
             }
             claims.add(cut);
             

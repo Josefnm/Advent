@@ -6,15 +6,15 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class Day {
+public class Day {
 
-    public Scanner sc;
+    public Scanner scanner;
 
     public Day() {
         try {
-            sc = new Scanner(new File("src/Advent/" + this.getClass().getSimpleName() + "/input.txt"));
+            scanner = new Scanner(new File("src/Advent/" + this.getClass().getSimpleName() + "/input.txt"));
         } catch (FileNotFoundException ex) {
-            sc = null;
+            
             Logger.getLogger(Day.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

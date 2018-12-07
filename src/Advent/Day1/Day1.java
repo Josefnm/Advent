@@ -1,7 +1,6 @@
 package Advent.Day1;
 
 import Advent.Day;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -10,8 +9,8 @@ public class Day1 extends Day {
      public ArrayList<Integer> read()  {
         
         ArrayList<Integer> freqList = new ArrayList<>();
-        while (sc.hasNext()) {
-            freqList.add(sc.nextInt());
+        while (scanner.hasNext()) {
+            freqList.add(scanner.nextInt());
         }
         return freqList;
     }

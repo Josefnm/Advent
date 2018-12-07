@@ -1,7 +1,6 @@
 package Advent.Day4;
 
 import Advent.Day;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -22,8 +21,8 @@ public class Day4 extends Day {
 
     private void read() {
         String s;
-        while (sc.hasNextLine()) {
-            s = sc.nextLine().replaceAll("[^0-9]", "");
+        while (scanner.hasNextLine()) {
+            s = scanner.nextLine().replaceAll("[^0-9]", "");
 //            System.out.println(s.substring(0, 12));
 //            System.out.println(Integer.parseInt(s.substring(12)+0)/10);
             times.put(s.substring(0, 12), Integer.parseInt(s.substring(12) + 0) / 10);

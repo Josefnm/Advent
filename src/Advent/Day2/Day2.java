@@ -9,8 +9,8 @@ public class Day2 extends Day {
     public Map<Integer, String> read() {
         Map<Integer, String> ids = new HashMap<>();
         int count = 0;
-        while (sc.hasNext()) {
-            ids.put(count++, sc.next());
+        while (scanner.hasNext()) {
+            ids.put(count++, scanner.next());
         }
         return ids;
     }
