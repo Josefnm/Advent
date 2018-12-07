@@ -2,19 +2,20 @@ package Advent.Day7;
 
 import Advent.Day;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class Day7 extends Day {
 
     TreeMap<Character, TreeSet<Character>> letterMap;
+    ArrayList<Character> result;
+    boolean done;
 
     public Day7() {
+        this.done = false;
         this.letterMap = new TreeMap<>();
         read();
+        result = new ArrayList<>(letterMap.keySet());
         question1();
     }
 
@@ -28,42 +29,42 @@ public class Day7 extends Day {
         }
     }
 
+    public boolean checkOrder(int a, int b) {
+        return letterMap.get(result.get(a)).contains(result.get(b));
+    }
+
+    public void replace(int i, int j) {
+        result.add(i, result.get(j));
+        result.remove(j + 1);
+        done = false;
+    }
+
     public void question1() {
-        ArrayList<Character> arr = new ArrayList<>(letterMap.keySet());
-        boolean done = false;
+
         while (!done) {
             done = true;
             for (int i = 0; i < 26; i++) {
+                a:
                 for (int j = i + 1; j < 26; j++) {
-                    boolean replace = false;
-                    if (letterMap.get(arr.get(j)).contains(arr.get(i))) {
-                        replace = true;
-                    } else if (i != 25 && arr.get(i) > arr.get(j)) {
-                        replace = true;
-                        for (int k = i; k < j + 1; k++) {
-                            if (letterMap.get(arr.get(k)).contains(arr.get(j))) {
-                                replace = false;
+                    if (checkOrder(j, i)) {
+                        replace(i, j);
+                    } else if (result.get(i) > result.get(j)) {
+                        for (int k = i; k < j; k++) {
+                            if (checkOrder(k, j)) {
+                                continue a;
                             }
                         }
-                    }
-                    if (replace) {
-                        arr.add(i, arr.get(j));
-                        arr.remove(j + 1);
-                        done = false;
+                        replace(i, j);
                     }
                 }
             }
         }
-        System.out.println(arr.toString().replace(", ", ""));
+        result.forEach((cha) -> System.out.print(cha));
+        System.out.println("");
     }
 
     public static void main(String[] args) {
         Day7 d = new Day7();
-
     }
-
 }
-//MOUBZFRYTXJNDIKQAHSGCPEVWL
-//MOUBZFRYTXJNDIKQAHSGCPEVWL
-//MNOUBYITKXZFHQRJDASGCPEVWL
 //MNOUBYITKXZFHQRJDASGCPEVWL
