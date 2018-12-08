@@ -6,12 +6,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.stream.IntStream;
 
 public class Day7 extends Day {
 
     TreeMap<Character, TreeSet<Character>> letterMap;
     ArrayList<Character> result;
     boolean done;
+    HashSet< Helper> helpers;
 
     public Day7() {
         this.done = false;
@@ -20,16 +22,16 @@ public class Day7 extends Day {
         question2();
     }
 
-    public void read() {
+      public void read() {
         letterMap = new TreeMap<>();
+        IntStream.range(65, 91).forEach(i -> letterMap.put((char)i,new TreeSet<>()));
         String s;
         while (scanner.hasNextLine()) {
             s = scanner.nextLine();
-            letterMap.putIfAbsent(s.charAt(5), new TreeSet<>());
-            letterMap.putIfAbsent(s.charAt(36), new TreeSet<>());
             letterMap.get(s.charAt(5)).add(s.charAt(36));
         }
     }
+
 
     public boolean checkOrder(int a, int b) {
         return letterMap.get(result.get(a)).contains(result.get(b));
@@ -69,83 +71,68 @@ public class Day7 extends Day {
 
     public class Helper {
 
-        Character character = 0;
+        Character letter = 0;
         int time = 0;
 
-        public boolean isFree() {
-            return time == 0;
+        public boolean isBusy() {
+            return time != 0;
         }
 
         public void tick() {
             if (time != 0) {
                 time--;
             } else {
-                character = 0;
+                letter = 0;
             }
         }
 
         private void setNew(Character character) {
-            this.character = character;
-            this.time = character - 5;
+            this.letter = character;
+            this.time = character - 4;
         }
     }
-    HashSet< Helper> helpers;
 
-    public Helper getFree() {
+    public Helper getFreeHelper() {
         for (Helper helper : helpers) {
-            if (helper.isFree()) {
+            if (!helper.isBusy()) {
                 return helper;
             }
         }
         return null;
     }
 
-    public void question2() {
-
-        helpers = new HashSet<>();
-        for (int i = 0; i < 5; i++) {
-            helpers.add(new Helper());
-        }
-        int counter = 0;
-        while (!result.isEmpty() || !helpers.stream().allMatch(helper -> helper.isFree())) {
-            helpers.forEach(helper -> helper.tick());
-            counter++;
-            if (helpers.stream().anyMatch(helper -> helper.isFree())) {
-                for (Character aEntry : letterMap.keySet()) {
-                    boolean b;
-                    if (b=result.contains(aEntry)) {
-                        for (Helper helper : helpers) {
-                            if (helper.character != 0 && letterMap.get(helper.character).contains(aEntry)) {
-                                b = false;
-                            }
-                        }
-                        for (Map.Entry<Character, TreeSet<Character>> bEntry : letterMap.entrySet()) {
-                            if (bEntry.getValue().contains(aEntry) && result.contains(bEntry.getKey())) {
-                                b = false;
-                            }
-                        }
-                    }
-                    if (b && helpers.stream().anyMatch(helper -> helper.isFree())) {
-                        getFree().setNew(aEntry);
-                        result.remove(aEntry);
-                    }
-                }
-            }
-        }
-        System.out.println(counter);
-
+    public boolean isValid(Character letter1) {
+        return !helpers.stream().allMatch(Helper::isBusy)
+                && result.contains(letter1)
+                && helpers.stream()
+                        .filter(Helper::isBusy)
+                        .noneMatch(
+                                helper -> letterMap
+                                        .get(helper.letter)
+                                        .contains(letter1))
+                && result.stream()
+                        .noneMatch(letter2 -> letterMap.get(letter2).contains(letter1));
     }
 
-    public boolean isValid() {
-        return helpers.stream()
-                .filter(helper -> helper.character != 0)
-                .noneMatch(helper -> (letterMap
-                .get(helper.character)
-                .contains(result.get(0))));
+    public void question2() {
+        helpers = new HashSet<>();
+        IntStream.range(0, 5).forEach(i -> helpers.add(new Helper()));
+        int counter = 0;
+        while (!(result.isEmpty() && helpers.stream().noneMatch(Helper::isBusy))) {
+            counter++;
+            letterMap.keySet().forEach((letter) -> {
+                if (isValid(letter)) {
+                    getFreeHelper().setNew(letter);
+                    result.remove(letter);
+                }
+            });
+            helpers.forEach(Helper::tick);
+        }
+        System.out.println(counter);
     }
 
     public static void main(String[] args) {
-        Day7 d = new Day7();
+        new Day7();
     }
 }
 //MNOUBYITKXZFHQRJDASGCPEVWL

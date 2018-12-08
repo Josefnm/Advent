@@ -1,0 +1,156 @@
+package Advent.Day7;
+
+import Advent.Day;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+public class Day7 extends Day {
+
+    TreeMap<Character, TreeSet<Character>> letterMap;
+    ArrayList<Character> result;
+    boolean done;
+
+    public Day7() {
+        this.done = false;
+        read();
+        question1();
+        question2();
+    }
+
+    public void read() {
+        letterMap = new TreeMap<>();
+        String s;
+        while (scanner.hasNextLine()) {
+            s = scanner.nextLine();
+            letterMap.putIfAbsent(s.charAt(5), new TreeSet<>());
+            letterMap.putIfAbsent(s.charAt(36), new TreeSet<>());
+            letterMap.get(s.charAt(5)).add(s.charAt(36));
+        }
+    }
+
+    public boolean checkOrder(int a, int b) {
+        return letterMap.get(result.get(a)).contains(result.get(b));
+    }
+
+    public void replace(int i, int j) {
+        result.add(i, result.get(j));
+        result.remove(j + 1);
+
+    }
+
+    public void question1() {
+        result = new ArrayList<>(letterMap.keySet());
+        while (!done) {
+            done = true;
+            for (int i = 0; i < 26; i++) {
+                a:
+                for (int j = i + 1; j < 26; j++) {
+                    if (checkOrder(j, i)) {
+                        replace(i, j);
+                        done = false;
+                    } else if (result.get(i) > result.get(j)) {
+                        for (int k = i; k < j; k++) {
+                            if (checkOrder(k, j)) {
+                                continue a;
+                            }
+                        }
+                        replace(i, j);
+                        done = false;
+                    }
+                }
+            }
+        }
+        result.forEach(cha -> System.out.print(cha));
+        System.out.println("");
+    }
+
+    public class Helper {
+
+        Character character = 0;
+        int time = 0;
+
+        public boolean isBusy() {
+            return time != 0;
+        }
+
+        public void tick() {
+            if (time != 0) {
+                time--;
+            } else {
+                character = 0;
+            }
+        }
+
+        private void setNew(Character character) {
+            this.character = character;
+            this.time = character - 5;
+        }
+    }
+    HashSet< Helper> helpers;
+
+    public Helper getFree() {
+        for (Helper helper : helpers) {
+            if (helper.isBusy()) {
+                return helper;
+            }
+        }
+        return null;
+    }
+
+    public void question2() {
+
+        helpers = new HashSet<>();
+        for (int i = 0; i < 5; i++) {
+            helpers.add(new Helper());
+        }
+        int counter = 0;
+        while (!result.isEmpty() || helpers.stream().allMatch(helper -> helper.isBusy())) {
+            helpers.forEach(helper -> helper.tick());
+            counter++;
+            letterMap.keySet().forEach((aEntry) -> {
+                boolean b;
+                if (!helpers.stream().allMatch(Helper::isBusy)) {
+                    if (b = result.contains(aEntry)) {
+//                        for (Helper helper : helpers) {
+//                            System.out.println(helper.character);
+//                        }
+                        //b=helpers.stream().filter(Helper::isBusy).anyMatch((Helper h1) -> letterMap.get(h1.character).contains(aEntry));
+                        for (Helper helper : helpers) {
+                            if (letterMap.get(helper.character).contains(aEntry)) {
+                                b = false;
+                            }
+                        }
+                        for (Map.Entry<Character, TreeSet<Character>> bEntry : letterMap.entrySet()) {
+                            if (bEntry.getValue().contains(aEntry) && result.contains(bEntry.getKey())) {
+                                b = false;
+                            }
+                        }
+                    }
+                    if (b ) {
+                        getFree().setNew(aEntry);
+                        result.remove(aEntry);
+                    }
+                }
+            });
+
+        }
+        System.out.println(counter);
+
+    }
+
+    public boolean isValid() {
+        return helpers.stream()
+                .filter(helper -> helper.character != 0)
+                .noneMatch(helper -> (letterMap
+                .get(helper.character)
+                .contains(result.get(0))));
+    }
+
+    public static void main(String[] args) {
+        Day7 d = new Day7();
+    }
+}
+//MNOUBYITKXZFHQRJDASGCPEVWL
