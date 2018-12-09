@@ -53,12 +53,7 @@ public class Day6 extends Day {
         }
         System.out.println(result);
     }
-public boolean blabla(Point land,int x, int y){
-    
-                            return ground[x][y].setOwner(land);
-         
-                       
-}
+
     public void question1() {
         boolean allDone = false;
         int i = 0;

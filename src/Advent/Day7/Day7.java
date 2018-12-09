@@ -2,15 +2,14 @@ package Advent.Day7;
 
 import Advent.Day;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.IntStream;
 
 public class Day7 extends Day {
 
-    TreeMap<Character, TreeSet<Character>> letterMap;
+    HashMap<Character, HashSet<Character>> letterMap;
     ArrayList<Character> result;
     boolean done;
     HashSet< Helper> helpers;
@@ -23,8 +22,8 @@ public class Day7 extends Day {
     }
 
       public void read() {
-        letterMap = new TreeMap<>();
-        IntStream.range(65, 91).forEach(i -> letterMap.put((char)i,new TreeSet<>()));
+        letterMap = new HashMap<>();
+        IntStream.range(65, 91).forEach(i -> letterMap.put((char)i,new HashSet<>()));
         String s;
         while (scanner.hasNextLine()) {
             s = scanner.nextLine();
@@ -86,7 +85,7 @@ public class Day7 extends Day {
             }
         }
 
-        private void setNew(Character character) {
+        private void newWork(Character character) {
             this.letter = character;
             this.time = character - 4;
         }
@@ -122,7 +121,7 @@ public class Day7 extends Day {
             counter++;
             letterMap.keySet().forEach((letter) -> {
                 if (isValid(letter)) {
-                    getFreeHelper().setNew(letter);
+                    getFreeHelper().newWork(letter);
                     result.remove(letter);
                 }
             });
