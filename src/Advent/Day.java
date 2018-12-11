@@ -8,11 +8,11 @@ import java.util.logging.Logger;
 
 public class Day {
 
-    public Scanner scanner;
+    public Scanner input;
 
     public Day() {
         try {
-            scanner = new Scanner(new File("src/Advent/" + this.getClass().getSimpleName() + "/input.txt"));
+            input = new Scanner(new File("src/Advent/" + this.getClass().getSimpleName() + "/input.txt"));
         } catch (FileNotFoundException ex) {
             
             Logger.getLogger(Day.class.getName()).log(Level.SEVERE, null, ex);

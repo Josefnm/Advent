@@ -1,4 +1,4 @@
-package Advent.Day6;
+package Advent.Day06;
 
 public class Point {
 
@@ -22,7 +22,7 @@ public class Point {
     }
 
     public boolean isEqualDistance(Point newOwner) {
-        return Day6.distance(this, newOwner) == Day6.distance(this, owner);
+        return Day06.distance(this, newOwner) == Day06.distance(this, owner);
     }
 
     public int getX() {

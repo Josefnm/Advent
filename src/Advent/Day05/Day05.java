@@ -1,18 +1,18 @@
-package Advent.Day5;
+package Advent.Day05;
 
 import Advent.Day;
 import java.util.LinkedList;
 import java.util.Stack;
 import java.util.TreeSet;
 
-public class Day5 extends Day {
+public class Day05 extends Day {
 
     public char[] chars;
     public TreeSet<Integer> counts;
 
-    public Day5() {
+    public Day05() {
         this.counts = new TreeSet<>();
-        chars = scanner.nextLine().toCharArray();
+        chars = input.nextLine().toCharArray();
         countAll();
     }
 
@@ -46,7 +46,7 @@ public class Day5 extends Day {
     }
 
     public static void main(String[] args) {
-        Day5 d = new Day5();
+        Day05 d = new Day05();
 
     }
 }

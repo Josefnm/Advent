@@ -1,16 +1,16 @@
-package Advent.Day3;
+package Advent.Day03;
 
 import Advent.Day;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Day3 extends Day {
+public class Day03 extends Day {
 
     private final List<int[]> claims;
     private final HashMap<Integer, Boolean> cloth;
 
-    public Day3() {
+    public Day03() {
         this.claims = new ArrayList<>();
         this.cloth = new HashMap<>();
         readClaims();
@@ -18,12 +18,12 @@ public class Day3 extends Day {
     }
 
     private void readClaims() {
-        scanner.useDelimiter("\\D+");
+        input.useDelimiter("\\D+");
         int[] cut;
-        while (scanner.hasNext()) {
+        while (input.hasNext()) {
             cut = new int[5];
             for (int i = 0; i < 5; i++) {
-                cut[i] = scanner.nextInt();
+                cut[i] = input.nextInt();
             }
             claims.add(cut);
             
@@ -64,7 +64,7 @@ public class Day3 extends Day {
     }
 
     public static void main(String[] args) {
-        Day3 d = new Day3();
+        Day03 d = new Day03();
         System.out.println(d.question1());
         System.out.println(d.question2());
         System.out.println(234%10);   

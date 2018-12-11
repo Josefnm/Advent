@@ -1,4 +1,4 @@
-package Advent.Day6;
+package Advent.Day06;
 
 import Advent.Day;
 import java.util.Arrays;
@@ -6,22 +6,22 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-public class Day6 extends Day {
+public class Day06 extends Day {
 
     HashSet<Point> landings;
     Point[][] ground;
     Point maxArea;
 
-    public Day6() {
+    public Day06() {
         addLandings();
         makeGround();
     }
 
     public void addLandings() {
         landings = new HashSet<>();
-        scanner.useDelimiter("\\D+");
-        while (scanner.hasNext()) {
-            landings.add(new Point(scanner.nextInt(), scanner.nextInt()));
+        input.useDelimiter("\\D+");
+        while (input.hasNext()) {
+            landings.add(new Point(input.nextInt(), input.nextInt()));
         }
     }
 
@@ -112,7 +112,7 @@ public class Day6 extends Day {
     }
 
     public static void main(String[] args) {
-        Day6 d = new Day6();
+        Day06 d = new Day06();
 
         d.question2();
         d.question1();

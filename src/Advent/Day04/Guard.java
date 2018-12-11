@@ -1,4 +1,4 @@
-package Advent.Day4;
+package Advent.Day04;
 
 /**
  *

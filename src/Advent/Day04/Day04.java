@@ -1,4 +1,4 @@
-package Advent.Day4;
+package Advent.Day04;
 
 import Advent.Day;
 import java.util.HashMap;
@@ -6,12 +6,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Day4 extends Day {
+public class Day04 extends Day {
 
     private final TreeMap<String, Integer> times;
     private final HashMap<Integer, Guard> guards;
 
-    public Day4() {
+    public Day04() {
         this.guards = new HashMap<>();
         this.times = new TreeMap();
         read();
@@ -21,8 +21,8 @@ public class Day4 extends Day {
 
     private void read() {
         String s;
-        while (scanner.hasNextLine()) {
-            s = scanner.nextLine().replaceAll("[^0-9]", "");
+        while (input.hasNextLine()) {
+            s = input.nextLine().replaceAll("[^0-9]", "");
 //            System.out.println(s.substring(0, 12));
 //            System.out.println(Integer.parseInt(s.substring(12)+0)/10);
             times.put(s.substring(0, 12), Integer.parseInt(s.substring(12) + 0) / 10);
@@ -68,7 +68,7 @@ public class Day4 extends Day {
     }
 
     public static void main(String[] args) {
-        Day4 d = new Day4();
+        Day04 d = new Day04();
         System.out.println(d.question1());
         System.out.println(d.question2());
     }

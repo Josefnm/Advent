@@ -1,16 +1,16 @@
-package Advent.Day2;
+package Advent.Day02;
 
 import Advent.Day;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Day2 extends Day {
+public class Day02 extends Day {
 
     public Map<Integer, String> read() {
         Map<Integer, String> ids = new HashMap<>();
         int count = 0;
-        while (scanner.hasNext()) {
-            ids.put(count++, scanner.next());
+        while (input.hasNext()) {
+            ids.put(count++, input.next());
         }
         return ids;
     }
@@ -53,7 +53,7 @@ public class Day2 extends Day {
     }
 
     public static void main(String[] args) {
-        Day2 d = new Day2();
+        Day02 d = new Day02();
         Map<Integer, String> ids = d.read();
         System.out.println(d.question1(ids));
         System.out.println(d.question2(ids));
