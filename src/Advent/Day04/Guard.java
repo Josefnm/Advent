@@ -1,19 +1,16 @@
 package Advent.Day04;
 
-/**
- *
- * @author Josef
- */
+
 public class Guard {
 
     private final Integer id;
     private int totalTimeSlept;
-    private int tempSlept;
+  
     private int[] sleepCount;
 
     public Guard(Integer id) {
         this.sleepCount = new int[60];
-        this.tempSlept = 0;
+     
         this.id = id;
         this.totalTimeSlept = 0;
     }
